@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="RPT_NETWORK_PLNG_SNDBX_DS" id="Project-1a37" database="GoogleBigQuery" >
+	<schema name="rpt_network_plng_sndbx_ds" >
+		<table name="ADDRESSABLE_PREMS_20221231" >
+			<column name="SOURCE" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="WC" type="string" jt="12" mandatory="y" />
+			<column name="MONTH" type="date" jt="91" mandatory="y" />
+			<column name="CT" type="int64" jt="4" mandatory="y" />
+		</table>
+		<table name="ADDRESSABLE_PREMS_V" >
+			<column name="SOURCE" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="WC" type="string" jt="12" mandatory="y" />
+			<column name="MONTH" type="date" jt="91" mandatory="y" />
+			<column name="CT" type="int64" jt="4" mandatory="y" />
+		</table>
+		<table name="ADDRESS_MASTER_20230426" >
+			<column name="address_id" type="string" jt="12" mandatory="y" />
+			<column name="address" type="string" jt="12" mandatory="y" />
+			<column name="house_no" type="string" jt="12" mandatory="y" />
+			<column name="sub_location" type="string" jt="12" mandatory="y" />
+			<column name="street_name" type="string" jt="12" mandatory="y" />
+			<column name="street_suffix" type="string" jt="12" mandatory="y" />
+			<column name="city" type="string" jt="12" mandatory="y" />
+			<column name="state" type="string" jt="12" mandatory="y" />
+			<column name="postal_cd" type="string" jt="12" mandatory="y" />
+			<column name="wcname" type="string" jt="12" mandatory="y" />
+			<column name="wirecenter_id" type="string" jt="12" mandatory="y" />
+			<column name="address_type" type="string" jt="12" mandatory="y" />
+			<column name="sfu" type="string" jt="12" mandatory="y" />
+			<column name="mdu" type="string" jt="12" mandatory="y" />
+			<column name="mdu_cnt" type="string" jt="12" mandatory="y" />
+			<column name="latitude" type="string" jt="12" mandatory="y" />
+			<column name="longitude" type="string" jt="12" mandatory="y" />
+			<column name="geo_precision" type="string" jt="12" mandatory="y" />
+			<column name="addr_source" type="string" jt="12" mandatory="y" />
+			<column name="address_status" type="string" jt="12" mandatory="y" />
+			<column name="address_tech" type="string" jt="12" mandatory="y" />
+			<column name="altman_fiber_build" type="string" jt="12" mandatory="y" />
+			<column name="brightspeed_fiber_enabled" type="string" jt="12" mandatory="y" />
+			<column name="enhanced_match" type="string" jt="12" mandatory="y" />
+			<column name="footnote" type="string" jt="12" mandatory="y" />
+			<column name="match_code" type="string" jt="12" mandatory="y" />
+			<column name="property_type" type="string" jt="12" mandatory="y" />
+			<column name="site_cd" type="string" jt="12" mandatory="y" />
+			<column name="dtap" type="string" jt="12" mandatory="y" />
+			<column name="terminal" type="string" jt="12" mandatory="y" />
+			<column name="drop_feed" type="string" jt="12" mandatory="y" />
+			<column name="drop_length" type="string" jt="12" mandatory="y" />
+			<column name="served_households" type="string" jt="12" mandatory="y" />
+			<column name="pre_survey_drops" type="string" jt="12" mandatory="y" />
+			<column name="location_hash" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="ADDRESS_POLY" >
+			<column name="STR_NUM" type="string" jt="12" mandatory="y" />
+			<column name="STR" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_DES" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_NUM" type="string" jt="12" mandatory="y" />
+			<column name="CITY" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="ZIP" type="int64" jt="4" mandatory="y" />
+			<column name="ZIP4" type="string" jt="12" mandatory="y" />
+			<column name="ZBA_PR_USE" type="string" jt="12" mandatory="y" />
+			<column name="CNTY_FIPS" type="int64" jt="4" mandatory="y" />
+			<column name="ADDR_CONF" type="int64" jt="4" mandatory="y" />
+			<column name="ID" type="int64" jt="4" mandatory="y" />
+			<column name="STATUS" type="string" jt="12" mandatory="y" />
+			<column name="AVAILABILTY_DATE" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_NAME" type="string" jt="12" mandatory="y" />
+			<column name="SERVICE_TYPE" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="ADDRESS_POLY_20221231" >
+			<column name="STR_NUM" type="string" jt="12" mandatory="y" />
+			<column name="STR" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_DES" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_NUM" type="string" jt="12" mandatory="y" />
+			<column name="CITY" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="ZIP" type="int64" jt="4" mandatory="y" />
+			<column name="ZIP4" type="string" jt="12" mandatory="y" />
+			<column name="ZBA_PR_USE" type="string" jt="12" mandatory="y" />
+			<column name="CNTY_FIPS" type="int64" jt="4" mandatory="y" />
+			<column name="ADDR_CONF" type="int64" jt="4" mandatory="y" />
+			<column name="ID" type="int64" jt="4" mandatory="y" />
+			<column name="STATUS" type="string" jt="12" mandatory="y" />
+			<column name="AVAILABILTY_DATE" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_NAME" type="string" jt="12" mandatory="y" />
+			<column name="SERVICE_TYPE" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="ADDRESS_POLY_20230131" >
+			<column name="STR_NUM" type="string" jt="12" mandatory="y" />
+			<column name="STR" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_DES" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_NUM" type="string" jt="12" mandatory="y" />
+			<column name="CITY" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="ZIP" type="int64" jt="4" mandatory="y" />
+			<column name="ZIP4" type="string" jt="12" mandatory="y" />
+			<column name="ZBA_PR_USE" type="string" jt="12" mandatory="y" />
+			<column name="CNTY_FIPS" type="int64" jt="4" mandatory="y" />
+			<column name="ADDR_CONF" type="int64" jt="4" mandatory="y" />
+			<column name="ID" type="int64" jt="4" mandatory="y" />
+			<column name="STATUS" type="string" jt="12" mandatory="y" />
+			<column name="AVAILABILTY_DATE" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_NAME" type="string" jt="12" mandatory="y" />
+			<column name="SERVICE_TYPE" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="ADDRESS_POLY_20230314" >
+			<column name="STR_NUM" type="string" jt="12" mandatory="y" />
+			<column name="STR" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_DES" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_NUM" type="string" jt="12" mandatory="y" />
+			<column name="CITY" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="ZIP" type="int64" jt="4" mandatory="y" />
+			<column name="ZIP4" type="string" jt="12" mandatory="y" />
+			<column name="ZBA_PR_USE" type="string" jt="12" mandatory="y" />
+			<column name="CNTY_FIPS" type="int64" jt="4" mandatory="y" />
+			<column name="ADDR_CONF" type="int64" jt="4" mandatory="y" />
+			<column name="ID" type="int64" jt="4" mandatory="y" />
+			<column name="STATUS" type="string" jt="12" mandatory="y" />
+			<column name="AVAILABILTY_DATE" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_NAME" type="string" jt="12" mandatory="y" />
+			<column name="SERVICE_TYPE" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="ADDRESS_POLY_20230505" >
+			<column name="STR_NUM" type="string" jt="12" mandatory="y" />
+			<column name="STR" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_DES" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_NUM" type="string" jt="12" mandatory="y" />
+			<column name="CITY" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="ZIP" type="int64" jt="4" mandatory="y" />
+			<column name="ZIP4" type="string" jt="12" mandatory="y" />
+			<column name="ZBA_PR_USE" type="string" jt="12" mandatory="y" />
+			<column name="CNTY_FIPS" type="int64" jt="4" mandatory="y" />
+			<column name="ADDR_CONF" type="int64" jt="4" mandatory="y" />
+			<column name="ID" type="int64" jt="4" mandatory="y" />
+			<column name="STATUS" type="string" jt="12" mandatory="y" />
+			<column name="AVAILABILTY_DATE" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_NAME" type="string" jt="12" mandatory="y" />
+			<column name="SERVICE_TYPE" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="ADDRESS_POLY_20230606" >
+			<column name="STR_NUM" type="string" jt="12" mandatory="y" />
+			<column name="STR" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_DES" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_NUM" type="string" jt="12" mandatory="y" />
+			<column name="CITY" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="ZIP" type="int64" jt="4" mandatory="y" />
+			<column name="ZIP4" type="string" jt="12" mandatory="y" />
+			<column name="ZBA_PR_USE" type="string" jt="12" mandatory="y" />
+			<column name="CNTY_FIPS" type="int64" jt="4" mandatory="y" />
+			<column name="ADDR_CONF" type="int64" jt="4" mandatory="y" />
+			<column name="ID" type="int64" jt="4" mandatory="y" />
+			<column name="STATUS" type="string" jt="12" mandatory="y" />
+			<column name="AVAILABILTY_DATE" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_NAME" type="string" jt="12" mandatory="y" />
+			<column name="SERVICE_TYPE" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="ADDRESS_POLY_20230621" >
+			<column name="STR_NUM" type="string" jt="12" mandatory="y" />
+			<column name="STR" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_DES" type="string" jt="12" mandatory="y" />
+			<column name="UNIT_NUM" type="string" jt="12" mandatory="y" />
+			<column name="CITY" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="ZIP" type="int64" jt="4" mandatory="y" />
+			<column name="ZIP4" type="string" jt="12" mandatory="y" />
+			<column name="ZBA_PR_USE" type="string" jt="12" mandatory="y" />
+			<column name="CNTY_FIPS" type="int64" jt="4" mandatory="y" />
+			<column name="ADDR_CONF" type="int64" jt="4" mandatory="y" />
+			<column name="ID" type="int64" jt="4" mandatory="y" />
+			<column name="STATUS" type="string" jt="12" mandatory="y" />
+			<column name="AVAILABILTY_DATE" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="SERVING_WIRE_CENTER_NAME" type="string" jt="12" mandatory="y" />
+			<column name="SERVICE_TYPE" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="BRSPD_PREMS_V" >
+			<column name="SCENARIO_ID" type="int64" jt="4" mandatory="y" />
+			<column name="SCENARIO_TITLE" type="string" jt="12" mandatory="y" />
+			<column name="WC_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="INITIAL_DESIGN_ADDR_CT" type="int64" jt="4" mandatory="y" />
+			<column name="INITIAL_DESIGN_PREM_CT" type="int64" jt="4" mandatory="y" />
+			<column name="CONSTRUCTION_START_ADDR_CT" type="int64" jt="4" mandatory="y" />
+			<column name="CONSTRUCTION_START_PREM_CT" type="int64" jt="4" mandatory="y" />
+			<column name="PREM_PASS_ADDR_CT" type="int64" jt="4" mandatory="y" />
+			<column name="PREM_PASS_PREM_CT" type="int64" jt="4" mandatory="y" />
+			<column name="OFS_ADDR_CT" type="int64" jt="4" mandatory="y" />
+			<column name="OFS_PREM_CT" type="int64" jt="4" mandatory="y" />
+		</table>
+		<table name="HLD_Complete_Address Report20230410" >
+			<column name="address_id" type="string" jt="12" mandatory="y" />
+			<column name="address" type="string" jt="12" mandatory="y" />
+			<column name="house_no" type="string" jt="12" mandatory="y" />
+			<column name="sub_location" type="string" jt="12" mandatory="y" />
+			<column name="street_name" type="string" jt="12" mandatory="y" />
+			<column name="street_suffix" type="string" jt="12" mandatory="y" />
+			<column name="city" type="string" jt="12" mandatory="y" />
+			<column name="state" type="string" jt="12" mandatory="y" />
+			<column name="postal_cd" type="string" jt="12" mandatory="y" />
+			<column name="wcname" type="string" jt="12" mandatory="y" />
+			<column name="wirecenter_id" type="string" jt="12" mandatory="y" />
+			<column name="address_type" type="string" jt="12" mandatory="y" />
+			<column name="sfu" type="boolean" jt="16" mandatory="y" />
+			<column name="mdu" type="boolean" jt="16" mandatory="y" />
+			<column name="mdu_cnt" type="string" jt="12" mandatory="y" />
+			<column name="latitude" type="string" jt="12" mandatory="y" />
+			<column name="longitude" type="string" jt="12" mandatory="y" />
+			<column name="geo_precision" type="string" jt="12" mandatory="y" />
+			<column name="addr_source" type="string" jt="12" mandatory="y" />
+			<column name="address_status" type="string" jt="12" mandatory="y" />
+			<column name="address_tech" type="string" jt="12" mandatory="y" />
+			<column name="altman_fiber_build" type="boolean" jt="16" mandatory="y" />
+			<column name="brightspeed_fiber_enabled" type="string" jt="12" mandatory="y" />
+			<column name="enhanced_match" type="string" jt="12" mandatory="y" />
+			<column name="footnote" type="string" jt="12" mandatory="y" />
+			<column name="match_code" type="string" jt="12" mandatory="y" />
+			<column name="property_type" type="string" jt="12" mandatory="y" />
+			<column name="site_cd" type="string" jt="12" mandatory="y" />
+			<column name="dtap" type="string" jt="12" mandatory="y" />
+			<column name="terminal" type="string" jt="12" mandatory="y" />
+			<column name="drop_feed" type="string" jt="12" mandatory="y" />
+			<column name="drop_length" type="string" jt="12" mandatory="y" />
+			<column name="served_households" type="int64" jt="4" mandatory="y" />
+			<column name="pre_survey_drops" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="HLD_Complete_Address Report20230410_2" >
+			<column name="address_id" type="string" jt="12" mandatory="y" />
+			<column name="address" type="string" jt="12" mandatory="y" />
+			<column name="house_no" type="string" jt="12" mandatory="y" />
+			<column name="sub_location" type="string" jt="12" mandatory="y" />
+			<column name="street_name" type="string" jt="12" mandatory="y" />
+			<column name="street_suffix" type="string" jt="12" mandatory="y" />
+			<column name="city" type="string" jt="12" mandatory="y" />
+			<column name="state" type="string" jt="12" mandatory="y" />
+			<column name="postal_cd" type="string" jt="12" mandatory="y" />
+			<column name="wcname" type="string" jt="12" mandatory="y" />
+			<column name="wirecenter_id" type="string" jt="12" mandatory="y" />
+			<column name="address_type" type="string" jt="12" mandatory="y" />
+			<column name="sfu" type="boolean" jt="16" mandatory="y" />
+			<column name="mdu" type="boolean" jt="16" mandatory="y" />
+			<column name="mdu_cnt" type="string" jt="12" mandatory="y" />
+			<column name="latitude" type="string" jt="12" mandatory="y" />
+			<column name="longitude" type="string" jt="12" mandatory="y" />
+			<column name="geo_precision" type="string" jt="12" mandatory="y" />
+			<column name="addr_source" type="string" jt="12" mandatory="y" />
+			<column name="address_status" type="string" jt="12" mandatory="y" />
+			<column name="address_tech" type="string" jt="12" mandatory="y" />
+			<column name="altman_fiber_build" type="boolean" jt="16" mandatory="y" />
+			<column name="brightspeed_fiber_enabled" type="string" jt="12" mandatory="y" />
+			<column name="enhanced_match" type="string" jt="12" mandatory="y" />
+			<column name="footnote" type="string" jt="12" mandatory="y" />
+			<column name="match_code" type="string" jt="12" mandatory="y" />
+			<column name="property_type" type="string" jt="12" mandatory="y" />
+			<column name="site_cd" type="string" jt="12" mandatory="y" />
+			<column name="dtap" type="string" jt="12" mandatory="y" />
+			<column name="terminal" type="string" jt="12" mandatory="y" />
+			<column name="drop_feed" type="string" jt="12" mandatory="y" />
+			<column name="drop_length" type="string" jt="12" mandatory="y" />
+			<column name="served_households" type="int64" jt="4" mandatory="y" />
+			<column name="pre_survey_drops" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="INVOICE_OVERVIEW_V" >
+			<column name="TICKET_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE_CATEGORY" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CREATED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_START_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_DUE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_CREATOR_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_REGION" type="string" jt="12" mandatory="y" />
+			<column name="PARENT_TICKET_PROJECT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="PARSED_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_TICKET_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_PROJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WC_COMPANY_CODE" type="string" jt="12" mandatory="y" />
+			<column name="WC_INVESTMENT_YEAR" type="string" jt="12" mandatory="y" />
+			<column name="WC_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="WC_REQUESTOR_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_RESPONDER_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_CITY" type="string" jt="12" mandatory="y" />
+			<column name="WC_STATE" type="string" jt="12" mandatory="y" />
+			<column name="WC_ZIP" type="string" jt="12" mandatory="y" />
+			<column name="WC_LOCATION" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_ID" type="int64" jt="4" mandatory="y" />
+			<column name="CUPS_SAP_INVOICE_NO" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_ITEMS_ID" type="int64" jt="4" mandatory="y" />
+			<column name="CUPS_VENDOR_INVOICE_NO" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_VENDOR" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_SAP_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_TICKET_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_CREATED_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="CUPS_SUBMITTED_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="CUPS_APPROVED_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="IQGEO_CUPS_PROJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_ITEMS_SAP_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_ITEMS_QTY_COMPLETED" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_UNIT_PRICE" type="string" jt="12" mandatory="y" />
+			<column name="TOTAL_COST_PER_TICKET" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_ITEMS_DESCRIPTION" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_EXTERNAL_ID" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_EXTERNAL_MSGD" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_TASK_CODE" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_CUPS_OBJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_COST_ELEMENT" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_COST_ELEMENT_NAME" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="MILESTONE_REPORT_V" >
+			<column name="TICKET_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CREATOR_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE_CATEGORY" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CANCELLED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_CREATED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_ASSIGNED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_LAST_MODIFIED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_REGION" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_UPDATE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_PROJECT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_START_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_DUE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_TICKET_DETAILS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ONSITE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_PROJECT" type="string" jt="12" mandatory="y" />
+			<column name="WC_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROPERTIES_TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WC_COMPANY_CODE" type="string" jt="12" mandatory="y" />
+			<column name="WC_INVESTMENT_YEAR" type="string" jt="12" mandatory="y" />
+			<column name="WC_APPROVAL_YEAR" type="int64" jt="4" mandatory="y" />
+			<column name="WC_SAP_PROJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_WBS_EXPENSE" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_WBS_CAPITAL" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_LOG" type="string" jt="12" mandatory="y" />
+			<column name="WC_REQUESTOR_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_RESPONDER_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="WC_CITY" type="string" jt="12" mandatory="y" />
+			<column name="WC_STATE" type="string" jt="12" mandatory="y" />
+			<column name="WC_ZIP" type="string" jt="12" mandatory="y" />
+			<column name="WC_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_STREET" type="string" jt="12" mandatory="y" />
+			<column name="WC_LOCATION" type="string" jt="12" mandatory="y" />
+			<column name="WC_ROUTE_OH" type="string" jt="12" mandatory="y" />
+			<column name="WC_ROUTE_UG" type="string" jt="12" mandatory="y" />
+			<column name="WC_DTAPS_UG" type="int64" jt="4" mandatory="y" />
+			<column name="WC_DTAPS_OH" type="int64" jt="4" mandatory="y" />
+			<column name="DELIVERABLE_ID" type="int64" jt="4" mandatory="y" />
+			<column name="DELIVERABLE_INTERNAL_NAME" type="string" jt="12" mandatory="y" />
+			<column name="DELIVERABLE_PROPOSED_START" type="string" jt="12" mandatory="y" />
+			<column name="DELIVERABLE_PROPOSED_END" type="string" jt="12" mandatory="y" />
+			<column name="DELIVERABLE_ACTUAL_START" type="string" jt="12" mandatory="y" />
+			<column name="DELIVERABLE_ACTUAL_END" type="string" jt="12" mandatory="y" />
+			<column name="DELIVERABLE_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="DELIVERABLE_CREATED_AT" type="timestamp" jt="93" mandatory="y" />
+			<column name="ADDRESS_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="PREM_COUNT" type="int64" jt="4" mandatory="y" />
+		</table>
+		<table name="SAP_BRSPD_V" >
+			<column name="COMPANY_CODE" type="string" jt="12" mandatory="y" />
+			<column name="DOCUMENT_NO" type="string" jt="12" mandatory="y" />
+			<column name="DOCUMENT_LINE_NO" type="string" jt="12" mandatory="y" />
+			<column name="DOCUMENT_UNIQUE" type="string" jt="12" mandatory="y" />
+			<column name="FISCAL_YEAR" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="DOCUMENT_DATE" type="date" jt="91" mandatory="y" />
+			<column name="DOCUMENT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="POSTING_DATE" type="date" jt="91" mandatory="y" />
+			<column name="VENDOR_INVOICE_NO" type="string" jt="12" mandatory="y" />
+			<column name="OBJECT" type="string" jt="12" mandatory="y" />
+			<column name="ACDOCA_OBJECT" type="string" jt="12" mandatory="y" />
+			<column name="OBJECT_DESCRIPTION" type="string" jt="12" mandatory="y" />
+			<column name="WBS" type="string" jt="12" mandatory="y" />
+			<column name="MATERIAL_LINE_ITEM_CODE" type="string" jt="12" mandatory="y" />
+			<column name="PURCHASE_ORDER" type="string" jt="12" mandatory="y" />
+			<column name="MATERIAL_LINE_ITEM_DESCRIPTION" type="string" jt="12" mandatory="y" />
+			<column name="COST_ELEMENT" type="string" jt="12" mandatory="y" />
+			<column name="COST_ELEMENT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="OFFSETTING_ACCOUNT" type="string" jt="12" mandatory="y" />
+			<column name="REG_ACCOUNT" type="string" jt="12" mandatory="y" />
+			<column name="REG_ACCOUNT_DESCRIPTION" type="string" jt="12" mandatory="y" />
+			<column name="VAL_CO_AREA_CRCY" type="numeric" jt="2" mandatory="y" />
+			<column name="OPERATION_FLAG" type="string" jt="12" mandatory="y" />
+			<column name="SAP_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE_CATEGORY" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CREATED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_START_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_DUE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_CREATOR_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_REGION" type="string" jt="12" mandatory="y" />
+			<column name="PARENT_TICKET_PROJECT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="PARSED_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_TICKET_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_PROJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WC_COMPANY_CODE" type="string" jt="12" mandatory="y" />
+			<column name="WC_INVESTMENT_YEAR" type="string" jt="12" mandatory="y" />
+			<column name="WC_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="WC_REQUESTOR_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_RESPONDER_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_CITY" type="string" jt="12" mandatory="y" />
+			<column name="WC_STATE" type="string" jt="12" mandatory="y" />
+			<column name="WC_ZIP" type="string" jt="12" mandatory="y" />
+			<column name="WC_LOCATION" type="string" jt="12" mandatory="y" />
+			<column name="WBS_ID" type="numeric" jt="2" mandatory="y" />
+			<column name="WBS_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="WBS_ELEMENT" type="string" jt="12" mandatory="y" />
+			<column name="WBS_STATISTICAL" type="boolean" jt="16" mandatory="y" />
+			<column name="WBS_INTEREST_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WBS_INVESTMENT_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WBS_REG_ACCOUNT" type="string" jt="12" mandatory="y" />
+			<column name="WBS_WC_NAME" type="string" jt="12" mandatory="y" />
+			<column name="ADDRESS_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="PREM_COUNT" type="int64" jt="4" mandatory="y" />
+		</table>
+		<table name="SAP_IQGeo_REPORT_V" >
+			<column name="Company_Code" type="string" jt="12" mandatory="y" />
+			<column name="Document_No" type="string" jt="12" mandatory="y" />
+			<column name="Document_Line_No" type="string" jt="12" mandatory="y" />
+			<column name="Document_Unique" type="string" jt="12" mandatory="y" />
+			<column name="Fiscal_Year" type="string" jt="12" mandatory="y" />
+			<column name="State" type="string" jt="12" mandatory="y" />
+			<column name="Document_Date" type="date" jt="91" mandatory="y" />
+			<column name="Document_Type" type="string" jt="12" mandatory="y" />
+			<column name="Posting_Date" type="date" jt="91" mandatory="y" />
+			<column name="Object" type="string" jt="12" mandatory="y" />
+			<column name="ACDOCA_Object" type="string" jt="12" mandatory="y" />
+			<column name="Object_Description" type="string" jt="12" mandatory="y" />
+			<column name="WBS" type="string" jt="12" mandatory="y" />
+			<column name="Cost_Element" type="string" jt="12" mandatory="y" />
+			<column name="Cost_Element_Name" type="string" jt="12" mandatory="y" />
+			<column name="Reg_Account" type="string" jt="12" mandatory="y" />
+			<column name="Reg_Accounts_Description" type="string" jt="12" mandatory="y" />
+			<column name="Val_CO_Area_Crcy" type="numeric" jt="2" mandatory="y" />
+			<column name="Operation_Flag" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE_CATEGORY" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CREATED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_START_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_DUE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_CREATOR_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_REGION" type="string" jt="12" mandatory="y" />
+			<column name="PARENT_TICKET_PROJECT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="PARSED_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_TICKET_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WIRECENTER_ID" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_PROJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WC_COMPANY_CODE" type="string" jt="12" mandatory="y" />
+			<column name="WC_INVESTMENT_YEAR" type="string" jt="12" mandatory="y" />
+			<column name="WC_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="WC_REQUESTOR_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_RESPONDER_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_CITY" type="string" jt="12" mandatory="y" />
+			<column name="WC_STATE" type="string" jt="12" mandatory="y" />
+			<column name="WC_ZIP" type="string" jt="12" mandatory="y" />
+			<column name="WC_LOCATION" type="string" jt="12" mandatory="y" />
+			<column name="WBS_ID" type="numeric" jt="2" mandatory="y" />
+			<column name="WBS_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="WBS_ELEMENT" type="string" jt="12" mandatory="y" />
+			<column name="WBS_STATISTICAL" type="boolean" jt="16" mandatory="y" />
+			<column name="WBS_INTEREST_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WBS_INVESTMENT_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WBS_REG_ACCOUNT" type="string" jt="12" mandatory="y" />
+			<column name="WBS_WC_NAME" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_ID" type="int64" jt="4" mandatory="y" />
+			<column name="CUPS_SAP_INVOICE_NO" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_ITEMS_ID" type="int64" jt="4" mandatory="y" />
+			<column name="CUPS_VENDOR_INVOICE_NO" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_VENDOR" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_SAP_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_TICKET_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_CREATED_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="SUBMITTED_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="CUPS_APPROVED_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="IQGEO_CUPS_PROJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_ITEMS_SAP_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_ITEMS_QTY_COMPLETED" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_UNIT_PRICE" type="string" jt="12" mandatory="y" />
+			<column name="TOTAL_COST_PER_TICKET" type="string" jt="12" mandatory="y" />
+			<column name="CUPS_ITEMS_DESCRIPTION" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_EXTERNAL_ID" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_EXTERNAL_MSGD" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_TASK_CODE" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_CUPS_OBJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_COST_ELEMENT" type="string" jt="12" mandatory="y" />
+			<column name="IQGEO_COST_ELEMENT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="ADD_WC_NAME" type="string" jt="12" mandatory="y" />
+			<column name="ADDRESS_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="PREM_COUNT" type="int64" jt="4" mandatory="y" />
+		</table>
+		<table name="SAP_OVERVIEW_V" >
+			<column name="COMPANY_CODE" type="string" jt="12" mandatory="y" />
+			<column name="DOCUMENT_NO" type="string" jt="12" mandatory="y" />
+			<column name="DOCUMENT_LINE_NO" type="string" jt="12" mandatory="y" />
+			<column name="DOCUMENT_UNIQUE" type="string" jt="12" mandatory="y" />
+			<column name="FISCAL_YEAR" type="string" jt="12" mandatory="y" />
+			<column name="STATE" type="string" jt="12" mandatory="y" />
+			<column name="DOCUMENT_DATE" type="date" jt="91" mandatory="y" />
+			<column name="DOCUMENT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="POSTING_DATE" type="date" jt="91" mandatory="y" />
+			<column name="VENDOR_INVOICE_NO" type="string" jt="12" mandatory="y" />
+			<column name="OBJECT" type="string" jt="12" mandatory="y" />
+			<column name="ACDOCA_OBJECT" type="string" jt="12" mandatory="y" />
+			<column name="OBJECT_DESCRIPTION" type="string" jt="12" mandatory="y" />
+			<column name="WBS" type="string" jt="12" mandatory="y" />
+			<column name="MATERIAL_LINE_ITEM_CODE" type="string" jt="12" mandatory="y" />
+			<column name="PURCHASE_ORDER" type="string" jt="12" mandatory="y" />
+			<column name="MATERIAL_LINE_ITEM_DESCRIPTION" type="string" jt="12" mandatory="y" />
+			<column name="COST_ELEMENT" type="string" jt="12" mandatory="y" />
+			<column name="COST_ELEMENT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="OFFSETTING_ACCOUNT" type="string" jt="12" mandatory="y" />
+			<column name="REG_ACCOUNT" type="string" jt="12" mandatory="y" />
+			<column name="REG_ACCOUNT_DESCRIPTION" type="string" jt="12" mandatory="y" />
+			<column name="VAL_CO_AREA_CRCY" type="numeric" jt="2" mandatory="y" />
+			<column name="OPERATION_FLAG" type="string" jt="12" mandatory="y" />
+			<column name="SAP_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE_CATEGORY" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CREATED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_START_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_DUE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_CREATOR_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_REGION" type="string" jt="12" mandatory="y" />
+			<column name="PARENT_TICKET_PROJECT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="PARSED_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_TICKET_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_PROJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WC_COMPANY_CODE" type="string" jt="12" mandatory="y" />
+			<column name="WC_INVESTMENT_YEAR" type="string" jt="12" mandatory="y" />
+			<column name="WC_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="WC_REQUESTOR_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_RESPONDER_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_CITY" type="string" jt="12" mandatory="y" />
+			<column name="WC_STATE" type="string" jt="12" mandatory="y" />
+			<column name="WC_ZIP" type="string" jt="12" mandatory="y" />
+			<column name="WC_LOCATION" type="string" jt="12" mandatory="y" />
+			<column name="WBS_ID" type="numeric" jt="2" mandatory="y" />
+			<column name="WBS_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="WBS_ELEMENT" type="string" jt="12" mandatory="y" />
+			<column name="WBS_STATISTICAL" type="boolean" jt="16" mandatory="y" />
+			<column name="WBS_INTEREST_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WBS_INVESTMENT_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WBS_REG_ACCOUNT" type="string" jt="12" mandatory="y" />
+			<column name="WBS_WC_NAME" type="string" jt="12" mandatory="y" />
+			<column name="ADDRESS_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="PREM_COUNT" type="int64" jt="4" mandatory="y" />
+		</table>
+		<table name="ScenarioSummary_BOM_Wed_May_17_2023" >
+			<column name="ID" type="int64" jt="4" mandatory="y" />
+			<column name="TITLE" type="string" jt="12" mandatory="y" />
+			<column name="WC" type="string" jt="12" mandatory="y" />
+			<column name="DESIGN_STATE" type="string" jt="12" mandatory="y" />
+			<column name="VENDOR" type="string" jt="12" mandatory="y" />
+			<column name="DERIVED" type="boolean" jt="16" mandatory="y" />
+			<column name="WHO_DERIVED" type="string" jt="12" mandatory="y" />
+			<column name="WHEN_DERIVED" type="string" jt="12" mandatory="y" />
+			<column name="OPTIMIZED" type="boolean" jt="16" mandatory="y" />
+			<column name="WHO_OPTIMIZED" type="string" jt="12" mandatory="y" />
+			<column name="WHEN_OPTIMIZED" type="string" jt="12" mandatory="y" />
+			<column name="PRIVATE_HOUSEHOLDS_ALL" type="int64" jt="4" mandatory="y" />
+			<column name="ADDRESSES_ALL" type="int64" jt="4" mandatory="y" />
+			<column name="PRIVATE_HOUSEHOLDS_UNSERVED" type="int64" jt="4" mandatory="y" />
+			<column name="ADDRESSES_UNSERVED" type="int64" jt="4" mandatory="y" />
+			<column name="COST_PER_PREM" type="string" jt="12" mandatory="y" />
+			<column name="LABOR" type="string" jt="12" mandatory="y" />
+			<column name="MATERIAL" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="TEST_TICKET_OVERVIEW_V" >
+			<column name="TICKET_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CREATOR_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE_CATEGORY" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CANCELLED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_CREATED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_ASSIGNED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_LAST_MODIFIED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_REGION" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_UPDATE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_START_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_DUE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_TICKET_DETAILS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ONSITE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_PROJECT" type="string" jt="12" mandatory="y" />
+			<column name="PARENT_TICKET_PROJECT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="PARSED_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_TICKET_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROPERTIES_TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WC_COMPANY_CODE" type="string" jt="12" mandatory="y" />
+			<column name="WC_INVESTMENT_YEAR" type="string" jt="12" mandatory="y" />
+			<column name="WC_APPROVAL_YEAR" type="int64" jt="4" mandatory="y" />
+			<column name="WC_SAP_PROJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_WBS_EXPENSE" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_WBS_CAPITAL" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_LOG" type="string" jt="12" mandatory="y" />
+			<column name="WC_REQUESTOR_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_RESPONDER_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_START_DATE_PLANNING" type="string" jt="12" mandatory="y" />
+			<column name="WC_END_DATE_PLANNING" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_START_DATE_SURVEY" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_END_DATE_SURVEY" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_START_DATE_PERMIT" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_END_DATE_PERMIT" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_START_DATE_CONSTRUCTION" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_END_DATE_CONSTRUCTION" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="WC_CITY" type="string" jt="12" mandatory="y" />
+			<column name="WC_STATE" type="string" jt="12" mandatory="y" />
+			<column name="WC_ZIP" type="string" jt="12" mandatory="y" />
+			<column name="WC_STREET" type="string" jt="12" mandatory="y" />
+			<column name="WC_LOCATION" type="string" jt="12" mandatory="y" />
+			<column name="WC_ROUTE_OH" type="string" jt="12" mandatory="y" />
+			<column name="WC_ROUTE_UG" type="string" jt="12" mandatory="y" />
+			<column name="WC_DTAPS_UG" type="int64" jt="4" mandatory="y" />
+			<column name="WC_DTAPS_OH" type="int64" jt="4" mandatory="y" />
+			<column name="SURVEY_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="SURVEY_ACTUAL_START_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="SURVEY_ACTUAL_END_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="DTAP_PROPERTIES_ID" type="int64" jt="4" mandatory="y" />
+			<column name="DTAP_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_ACTUAL_START_DATE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_ACTUAL_END_DATE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PLACEMENT" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_NAME" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_REFERENCE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_1" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_1" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_2" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_2" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_3" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_3" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_4" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_4" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_5" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_5" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_6" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_6" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_1" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_1" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_2" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_2" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_3" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_3" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_4" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_4" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_5" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_5" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_6" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_6" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_UNDERGROUND_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_UNDERGROUND_WIDTH" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_UNDERGROUND_DEPTH" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_BURIED_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_BURIED_WIDTH" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_BURIED_DEPTH" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_AERIAL_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_AERIAL_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_BURRIED_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_AERIAL_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_UNDERGROUND_DEPTH" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_CABLE_LENGTH" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_COMMENTS" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_START_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="FEEDER_END_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="FEEDER_BURRIED_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_AERIAL_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PLACEMENT" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_UG_WIDTH" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PROPERTIES_PARENT" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_UG_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_BURIED_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_NOOF_CABLES" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_LAST_MODIFIED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="FEEDER_PATH_BURIED_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_TOTAL_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_AERIAL_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PROPERTIES_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_UNDERGROUND_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_TRENCH_MATERIAL" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_BURIED_DEPTH" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_ADDRESS" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PROPERTIES_REFERENCE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_BURIED_WIDTH" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_PROPERTIES_ID" type="int64" jt="4" mandatory="y" />
+			<column name="PERMIT_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_PROPERTIES_PARENT" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_ADDRESS" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_START_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="PERMIT_END_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="PERMIT_AERIAL_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_BURRIED_COMPLETE" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="TICKET_OVERVIEW_V" >
+			<column name="TICKET_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CREATOR_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ASSIGNED_USERNAME" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_TYPE_CATEGORY" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_CANCELLED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_CREATED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_ASSIGNED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_LAST_MODIFIED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_REGION" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_UPDATE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_START_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_DUE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_TICKET_DETAILS" type="string" jt="12" mandatory="y" />
+			<column name="TICKET_ONSITE_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="TICKET_PROJECT" type="string" jt="12" mandatory="y" />
+			<column name="PARENT_TICKET_PROJECT_NAME" type="string" jt="12" mandatory="y" />
+			<column name="PARSED_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_TICKET_CLLI" type="string" jt="12" mandatory="y" />
+			<column name="WC_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROPERTIES_TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="WC_PROFILE" type="string" jt="12" mandatory="y" />
+			<column name="WC_COMPANY_CODE" type="string" jt="12" mandatory="y" />
+			<column name="WC_INVESTMENT_YEAR" type="string" jt="12" mandatory="y" />
+			<column name="WC_APPROVAL_YEAR" type="int64" jt="4" mandatory="y" />
+			<column name="WC_SAP_PROJECT_NUMBER" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_WBS_EXPENSE" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_WBS_CAPITAL" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_STATUS" type="string" jt="12" mandatory="y" />
+			<column name="WC_SAP_LOG" type="string" jt="12" mandatory="y" />
+			<column name="WC_REQUESTOR_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_RESPONDER_COST_CENTER" type="string" jt="12" mandatory="y" />
+			<column name="WC_START_DATE_PLANNING" type="string" jt="12" mandatory="y" />
+			<column name="WC_END_DATE_PLANNING" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_START_DATE_SURVEY" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_END_DATE_SURVEY" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_START_DATE_PERMIT" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_END_DATE_PERMIT" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_START_DATE_CONSTRUCTION" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_END_DATE_CONSTRUCTION" type="datetime" jt="93" mandatory="y" />
+			<column name="WC_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="WC_CITY" type="string" jt="12" mandatory="y" />
+			<column name="WC_STATE" type="string" jt="12" mandatory="y" />
+			<column name="WC_ZIP" type="string" jt="12" mandatory="y" />
+			<column name="WC_STREET" type="string" jt="12" mandatory="y" />
+			<column name="WC_LOCATION" type="string" jt="12" mandatory="y" />
+			<column name="WC_ROUTE_OH" type="string" jt="12" mandatory="y" />
+			<column name="WC_ROUTE_UG" type="string" jt="12" mandatory="y" />
+			<column name="WC_DTAPS_UG" type="int64" jt="4" mandatory="y" />
+			<column name="WC_DTAPS_OH" type="int64" jt="4" mandatory="y" />
+			<column name="SURVEY_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="SURVEY_ACTUAL_START_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="SURVEY_ACTUAL_END_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="DTAP_PROPERTIES_ID" type="int64" jt="4" mandatory="y" />
+			<column name="DTAP_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_ACTUAL_START_DATE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_ACTUAL_END_DATE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PLACEMENT" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_NAME" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_REFERENCE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_1" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_1" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_2" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_2" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_3" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_3" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_4" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_4" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_5" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_5" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_PASS_FAIL_6" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_READING_6" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_1" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_1" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_2" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_2" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_3" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_3" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_4" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_4" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_5" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_5" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_PASS_FAIL_6" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_RUN_READING_6" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_UNDERGROUND_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_UNDERGROUND_WIDTH" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_UNDERGROUND_DEPTH" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_BURIED_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_BURIED_WIDTH" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_BURIED_DEPTH" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_AERIAL_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_AERIAL_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="DTAP_BURRIED_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PROPERTIES_ID" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_AERIAL_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_UNDERGROUND_DEPTH" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_CABLE_LENGTH" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_COMMENTS" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_START_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="FEEDER_END_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="FEEDER_BURRIED_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_AERIAL_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PLACEMENT" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_UG_WIDTH" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PROPERTIES_PARENT" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_UG_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_BURIED_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_NOOF_CABLES" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_LAST_MODIFIED_DATETIME" type="datetime" jt="93" mandatory="y" />
+			<column name="FEEDER_PATH_BURIED_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_TOTAL_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_AERIAL_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PROPERTIES_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_UNDERGROUND_FOOTAGE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_TRENCH_MATERIAL" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_BURIED_DEPTH" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_ADDRESS" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PROPERTIES_REFERENCE" type="string" jt="12" mandatory="y" />
+			<column name="FEEDER_PATH_BURIED_WIDTH" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_PROPERTIES_ID" type="int64" jt="4" mandatory="y" />
+			<column name="PERMIT_TICKET_ID" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_PROPERTIES_PARENT" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_CONTRACTOR" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_TICKET_GROUP" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_ADDRESS" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_START_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="PERMIT_END_DATE" type="datetime" jt="93" mandatory="y" />
+			<column name="PERMIT_AERIAL_COMPLETE" type="string" jt="12" mandatory="y" />
+			<column name="PERMIT_BURRIED_COMPLETE" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="Test_T" >
+			<column name="ST_PROJECT_ID" type="string" jt="12" mandatory="y" />
+			<column name="PHASE_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="PHASE_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="PHASE_COUNT" type="bignumeric" jt="8" mandatory="y" />
+			<column name="PHASE_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="PHASE_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="PHASE_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="PHASE_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="SITE_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="SITE_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="SITE_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="SITE_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="ASSOCIATED_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="ASSOCIATED_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="SITE_ASSOCIATED_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="RELATED_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="RELATED_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="RELATED_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="RELATED_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="RELATED_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="RELATED_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="RELATED_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="QF_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="QF_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="QF_PROJECT_URL" type="string" jt="12" mandatory="y" />
+		</table>
+		<table name="Test_TT" >
+			<column name="ST_PROJECT_ID" type="string" jt="12" mandatory="y" />
+			<column name="PHASE_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="PHASE_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="PHASE_COUNT" type="bignumeric" jt="8" mandatory="y" />
+			<column name="PHASE_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="PHASE_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="PHASE_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="PHASE_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="SITE_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="SITE_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="SITE_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="SITE_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="ASSOCIATED_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="ASSOCIATED_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="ASSOCIATED_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="SITE_ASSOCIATED_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="SITE_ASSOCIATED_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="RELATED_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="RELATED_PROJECT_TYPE" type="string" jt="12" mandatory="y" />
+			<column name="RELATED_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="RELATED_PROJECT_COMPLETE_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="RELATED_PROJECT_CANCELLED_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="RELATED_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="RELATED_FW_PROJECT_URL" type="string" jt="12" mandatory="y" />
+			<column name="QF_PROJECTS" type="string" jt="12" mandatory="y" />
+			<column name="QF_PROJECT_COUNT" type="int64" jt="4" mandatory="y" />
+			<column name="QF_PROJECT_URL" type="string" jt="12" mandatory="y" />
+		</table>
+	</schema>
+	<layout name="meta" id="Layout-10c4" show_relation="columns" >
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESSABLE_PREMS_20221231" color="C7F4BE" x="1904" y="496" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESSABLE_PREMS_V" color="C7F4BE" x="2208" y="496" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_MASTER_20230426" color="BED3F4" x="416" y="2576" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY" color="C7F4BE" x="2784" y="496" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20221231" color="C7F4BE" x="2784" y="912" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230131" color="C7F4BE" x="2464" y="912" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230314" color="C7F4BE" x="2144" y="912" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230505" color="C7F4BE" x="2144" y="80" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230606" color="C7F4BE" x="2464" y="80" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230621" color="C7F4BE" x="2464" y="496" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="BRSPD_PREMS_V" color="BED3F4" x="704" y="2576" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="HLD_Complete_Address Report20230410" color="BED3F4" x="704" y="3280" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="HLD_Complete_Address Report20230410_2" color="BED3F4" x="48" y="1472" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="INVOICE_OVERVIEW_V" color="BED3F4" x="368" y="3280" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="MILESTONE_REPORT_V" color="BED3F4" x="80" y="2288" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="SAP_BRSPD_V" color="BED3F4" x="416" y="1472" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="SAP_IQGeo_REPORT_V" color="BED3F4" x="80" y="80" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="SAP_OVERVIEW_V" color="BED3F4" x="416" y="368" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="ScenarioSummary_BOM_Wed_May_17_2023" color="BED3F4" x="1040" y="2576" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="TEST_TICKET_OVERVIEW_V" color="BED3F4" x="1056" y="3280" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="TICKET_OVERVIEW_V" color="BED3F4" x="1456" y="2576" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="Test_T" color="BED3F4" x="1040" y="1808" />
+		<entity schema="rpt_network_plng_sndbx_ds" name="Test_TT" color="BED3F4" x="1456" y="1808" />
+		<group name="ADDRESS_MASTER_20230426" color="ECF0F7" >
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_MASTER_20230426" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="BRSPD_PREMS_V" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="HLD_Complete_Address Report20230410" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="INVOICE_OVERVIEW_V" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="MILESTONE_REPORT_V" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="SAP_BRSPD_V" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="ScenarioSummary_BOM_Wed_May_17_2023" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="Test_T" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="TEST_TICKET_OVERVIEW_V" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="Test_TT" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="TICKET_OVERVIEW_V" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="SAP_IQGeo_REPORT_V" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="SAP_OVERVIEW_V" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="HLD_Complete_Address Report20230410_2" />
+		</group>
+		<group name="datasetgroup" color="EEF7EC" >
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESSABLE_PREMS_20221231" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESSABLE_PREMS_V" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230621" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20221231" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230131" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230314" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230505" />
+			<entity schema="rpt_network_plng_sndbx_ds" name="ADDRESS_POLY_20230606" />
+		</group>
+	</layout>
+</project>
