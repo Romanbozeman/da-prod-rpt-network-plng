@@ -1,0 +1,19 @@
+
+SELECT table_catalog, table_schema, table_name, column_name, data_type
+FROM `da-prod-rpt-network-plng`.BI_EC.INFORMATION_SCHEMA.COLUMNS
+
+UNION ALL
+
+SELECT table_catalog, table_schema, table_name, column_name, data_type
+FROM `da-prod-rpt-network-plng`.BI_EC_PL.INFORMATION_SCHEMA.COLUMNS
+
+UNION ALL
+
+SELECT table_catalog, table_schema, table_name, column_name, data_type
+FROM `da-prod-rpt-network-plng`.RPT_CUR_ODIN_BQD.INFORMATION_SCHEMA.COLUMNS
+
+UNION ALL
+
+SELECT table_catalog, table_schema, table_name, column_name, data_type
+FROM `da-prod-rpt-network-plng`.RPT_NETWORK_PLNG_SNDBX_DS.INFORMATION_SCHEMA.COLUMNS
+

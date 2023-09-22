@@ -1,0 +1,56 @@
+with grpmap as (
+  select tskgrpmap.TASK_INSTANCE_ID as TASK_INSTANCE_ID, UG.USER_GROUP_ID, UG.GROUP_NAME
+  from `da-prod-dwh-dw01.AV_STAGE.WFMT_TASK_INST_GRP_MAPP_AV` as tskgrpmap
+    Left Outer JOIN `da-prod-dwh-dw01.AV_STAGE.WFMT_USER_GROUP_AV` as UG on tskgrpmap.USER_GROUP_ID = UG.USER_GROUP_ID
+  where UG.SRC_META_CURR_IND = 'Y'
+    and (UG.GROUP_NAME='Provision-Access' OR UG.GROUP_NAME LIKE 'ONA-A%' OR UG.GROUP_NAME='Provision-Core Data' or UG.GROUP_NAME="Provision-Vendor")
+),
+document as (
+  select *
+  from (
+    select 
+      DOC.DOCUMENT_ID,
+      DOC.PROJECTID,
+      DOC.FIELD_NAME,
+      DOC.FIELD_VALUE,
+      ROW_NUMBER() over (PARTITION BY PROJECTID, FIELD_NAME order by INSDATE DESC) as RN
+    from `da-prod-dwh-dw01.AV_STAGE.WFMT_DOCUMENT_FLD_VAL_EXT_AV` as DOC
+    WHERE FIELD_NAME in ('areaRegion', 'areaState', 'areaWireCenter')
+    and SRC_META_SOURCE_TRANS_TYP = 'U'
+  )
+  where RN=1
+)
+
+select 
+  TSK.MASTER_REQUEST_ID as Project_ID,
+  TSK.TASK_INSTANCE_ID as Task_ID,
+  UG.GROUP_NAME as WFMT_Workgroup,
+  AST.FIELD_VALUE as STATE,
+  AR.FIELD_VALUE as REGION, 
+  AWC.FIELD_VALUE as WIRECENTER,
+  UI.NAME as WFMT_Assigned_Engineer,
+  UI.CUID as WFMT_Assigned_CUID,
+  STATUS.TASK_STATUS_DESC AS TASK_STATUS,
+  TSK.COMMENTS,
+  REGEXP_EXTRACT(TSK.COMMENTS, r'^(.*)\n*.*') as Activity_Type,
+  TSK.CREATE_DT as Create_Date,
+  TSK.TASK_START_DT as Start_Date,
+  TSK.TASK_END_DT as End_Date,
+  TSK.TASK_INSTANCE_REFERRED_AS,
+  TSK.PRIORITY,
+  STATE.TASK_STATE_DESC as TASK_STATE,
+from 
+  `da-prod-dwh-dw01.AV_STAGE.WFMT_TASK_INSTANCE_AV` as TSK
+  left join `da-prod-dwh-dw01.AV_STAGE.WFMT_USER_INFO_AV` AS UI on TSK.TASK_CLAIM_USER_ID = UI.USER_INFO_ID
+  left join `da-prod-dwh-dw01.AV_STAGE.WFMT_TASK_STATUS_AV` AS STATUS on TSK.TASK_INSTANCE_STATUS=STATUS.TASK_STATUS_ID
+  left join `da-prod-dwh-dw01.AV_STAGE.WFMT_TASK_STATE_AV` AS STATE on TSK.TASK_INSTANCE_STATE=STATE.TASK_STATE_ID
+  left join (select * from document where FIELD_NAME = 'areaRegion') as AR on TSK.MASTER_REQUEST_ID = AR.PROJECTID
+  left join (select * from document where FIELD_NAME = 'areaState') as AST on AR.DOCUMENT_ID = AST.DOCUMENT_ID
+  left join (select * from document where FIELD_NAME = 'areaWireCenter') as AWC on AR.DOCUMENT_ID = AWC.DOCUMENT_ID
+  inner join grpmap as UG on TSK.TASK_INSTANCE_ID = UG.TASK_INSTANCE_ID
+where 
+  EXTRACT(YEAR FROM TSK.CREATE_DT) >= 2019
+  and not (UI.CUID is null and STATUS.TASK_STATUS_DESC in ("Completed", "Assigned"))
+  -- and not (UI.CUID is null and STATUS.TASK_STATUS_DESC != "Open")
+  -- and TSK.TASK_INSTANCE_ID = 109615577
+  

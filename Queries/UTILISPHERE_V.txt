@@ -1,0 +1,616 @@
+-- CREATE OR REPLACE VIEW "DWH_CUR_UTILISPHERE_BQD"."LDR_LCT_DISPCLR_V" ("TICKET_ID", "TICKET_NUMBER", "NETWORK", "CALL_CENTER", "TICKET_TYPE", "CITY", "COUNTY", "STATE", "CENTER_LAT", "CENTER_LON", "AUTOPROCESSCLEARED", "CPMCLEARED", "FOCLEARED", "APEX_CLEARED", "DISPATCHED", "INTERNALLY_CANCELLED", "CPM_CLEAR_DESC", "FO_CLEAR_DESC", "APEX_CLEAR_DESC", "DISP_DESC", "LAST_CONT_RESP", "TICKETRECEIVEDTS", "AP_DATETIME", "CLEAR_DATETIME", "DISPATCH_DATETIME", "LOCATE_DATETIME", "MONTH", "LE_VENDOR", "LOCATE_ADDRESS", "REMARKS", "WORK_DONE_FOR", "RISK_SCORE", "FIRSTRESPONSECO", "LASTRESPONSECO", "ASSIGNEDCONTRACTOR", "SERVICEAREA", "CALCDUEDATE", "FIRSTRES_DATE", "LASTRES_DATE", "RTR_MINUTES", "RTC_MINUTES", "DTL_MINUTES", "RTIC_MINUTES", "DUE_NOTDUE", "CONTRACTOR_INTERNAL_OTR", "OTR_LOCATORNAME", "RESPONSE_CODE", "CONTRACTOR_INTERNAL_OTC", "OTC_LOCATORNAME", "OTC_LOCATOREMAIL", "SUPERVISOR", "OTRFLAG", "OTCFLAG", "WIP_PAST_DUEFLAG") AS 
+WITH 
+autoprocess AS (SELECT 
+                ticket_id, 
+                short_description, 
+                long_description, 
+                create_datetime AS ap_datetime
+                FROM ticket_audit WHERE --legacy_co = 'GREEN'
+                LOWER(short_description) = 'responded'
+                AND (LOWER(long_description) LIKE '%auto process%' OR LOWER(long_description) LIKE '%non human%')
+                AND DATE_TRUNC(DATE(create_datetime), MONTH) >= DATE_ADD(DATE_TRUNC(CURRENT_DATE(), YEAR), 
+                INTERVAL -24 MONTH)),
+CPM_clear AS (
+        SELECT  -- + use_hash(aud MAXRES) 
+              aud.ticket_id, aud.short_description, aud.long_description, aud.create_datetime AS clear_datetime
+              FROM ticket_audit aud
+              INNER JOIN (SELECT 
+                          ticket_id, 
+                          MAX(ticket_audit_id) AS ticket_audit_id 
+                          FROM ticket_audit
+                          WHERE
+                            --legacy_co = 'GREEN' 
+                            LOWER(short_description) = 'responded'
+                            AND LOWER(long_description) NOT LIKE '%contract locator%'
+                            AND LOWER(long_description) NOT LIKE '%added by: contractor%'
+                            AND LOWER(long_description) NOT LIKE '%auto process%'
+                            AND LOWER(long_description) NOT LIKE '%acknowledged%'
+                            AND LOWER(long_description) NOT LIKE '%(ongoing)%'
+                            AND DATE_TRUNC(create_datetime, MONTH) >= DATE_ADD(DATE_TRUNC(CURRENT_DATE(), YEAR), INTERVAL -24 MONTH)
+                          GROUP BY ticket_id) maxres ON maxres.ticket_audit_id = aud.ticket_audit_id
+                          AND maxres.ticket_id = aud.ticket_id),
+apexscreener AS (SELECT  -- + use_hash(aud MAXRES) 
+                aud.ticket_id, aud.short_description, aud.long_description, aud.create_datetime AS clear_datetime
+                FROM ticket_audit aud
+                INNER JOIN (SELECT 
+                            ticket_id, 
+                            MAX(ticket_audit_id) AS ticket_audit_id 
+                            FROM ticket_audit
+                            WHERE
+                                 --legacy_co = 'GREEN' 
+                                LOWER(short_description) = 'responded'
+                                AND LOWER(long_description) NOT LIKE '%contract locator%'
+                                AND LOWER(long_description) NOT LIKE '%auto process%'
+                                AND LOWER(long_description) NOT LIKE '%acknowledged%'
+                                AND LOWER(long_description) NOT LIKE '%(ongoing)%'
+                                AND LOWER(long_description) LIKE '%- qwest:%'
+                                AND DATE_TRUNC(create_datetime, MONTH) >= DATE_ADD(DATE_TRUNC(CURRENT_DATE(), YEAR), INTERVAL -24 MONTH)
+                            GROUP BY ticket_id) maxres ON maxres.ticket_audit_id = aud.ticket_audit_id AND maxres.ticket_id = aud.ticket_id),
+fieldopslocator AS (
+        SELECT -- + use_hash(aud MAXRES) 
+                aud.ticket_id, aud.short_description, aud.long_description, aud.create_datetime AS clear_datetime
+                FROM ticket_audit aud
+                INNER JOIN (SELECT 
+                            ticket_id, 
+                            MAX(ticket_audit_id) AS ticket_audit_id 
+                            FROM ticket_audit
+                            WHERE
+                                --legacy_co = 'GREEN'
+                                LOWER(short_description) = 'responded'
+                                AND LOWER(long_description) NOT LIKE '%contract locator%'
+                                AND LOWER(long_description) NOT LIKE '%auto process%'
+                                AND LOWER(long_description) NOT LIKE '%acknowledged%'
+                                AND LOWER(long_description) NOT LIKE '%(ongoing)%'
+                                AND LOWER(long_description) NOT LIKE '%- qwest:%'   
+                                AND DATE_TRUNC(create_datetime, MONTH) >= DATE_ADD(DATE_TRUNC(CURRENT_DATE(), YEAR), INTERVAL -24 MONTH)
+                                GROUP BY ticket_id) maxres ON maxres.ticket_audit_id = aud.ticket_audit_id
+                                AND maxres.ticket_id = aud.ticket_id),
+dispatch AS (
+        SELECT -- + use_hash(AUD MAXASS MAXRES) 
+            aud.ticket_id,  --aud.legacy_co,
+            aud.short_description AS asgn_short_description, aud.long_description  AS asgn_long_description, aud.create_datetime   AS dispatch_datetime, maxres.res_short_description, maxres.res_long_description, maxres.locate_datetime
+            FROM `project.dataset.ticket_audit` aud
+            INNER JOIN (SELECT 
+                        ticket_id, 
+                        MAX(ticket_audit_id) AS ticket_audit_id 
+                        FROM `project.dataset.ticket_audit`
+                        WHERE --legacy_co = 'GREEN'
+                            LOWER(short_description) = 'assigned' OR LOWER(long_description) LIKE '%from training%'
+                            AND LOWER(long_description) NOT LIKE '%unknown line%'
+                            AND DATE_TRUNC(create_datetime, MONTH) >= DATE_ADD(DATE_TRUNC(CURRENT_DATE(), YEAR), INTERVAL -24 MONTH)
+                            GROUP BY ticket_id) 
+                            maxass ON maxass.ticket_audit_id = aud.ticket_audit_id
+                        INNER JOIN (
+                            SELECT  -- + use_hash(AUD MAXRES) 
+                            aud.ticket_id, 
+                            aud.short_description AS res_short_description, 
+                            aud.long_description AS res_long_description, 
+                            aud.create_datetime AS locate_datetime
+                            FROM `project.dataset.ticket_audit` aud
+                        INNER JOIN (
+                            SELECT 
+                            ticket_id, 
+                            MAX(ticket_audit_id) AS ticket_audit_id 
+                            FROM `project.dataset.ticket_audit`
+                            WHERE
+                            --legacy_co = 'GREEN'
+                            LOWER(short_description) = 'responded'
+                            AND LOWER(long_description) LIKE '%contract locator%'
+                            AND DATE_TRUNC(create_datetime, MONTH) >= DATE_ADD(DATE_TRUNC(CURRENT_DATE(), YEAR), INTERVAL -24 MONTH)
+                            GROUP BY ticket_id) maxres ON maxres.ticket_audit_id = aud.ticket_audit_id) 
+                            maxres ON maxres.ticket_id = aud.ticket_id),
+dispatch2 AS (
+        SELECT 
+        ticket_id,
+        CASE
+            WHEN folder IN ('CAR09 Combo', 'CLE02', 'KC27 Combo', 'KYMNS02', 'LAX01B', 'GAMNS0', 'KYMNS01', 'ATL01', 
+                            'ATL02', 'ATL06', 'ATL11', 'ATL12', 'ATL14', 'ATL18', 'ATL19', 'ATL20', 'ATL21', 'AUS02', 
+                            'AUS03', 'AUS04', 'AUS05', 'AUS06', 'AUS07', 'AUS08', 'AUS11', 'AUS12', 'BAL02', 'BAL03', 
+                            'BOS02', 'BOS03', 'BOS04', 'BOS05', 'BOS08', 'BOS09', 'BOS10', 'BOS11', 'BOS421', 'CAN01', 
+                            'CAN02', 'CAN04', 'CAR03', 'CAR05', 'CAR06', 'CAR08', 'CAR09', 'CHI03', 'CIN01', 'CIN04', 
+                            'CIN05', 'DAL02A', 'DAL03', 'DAL03A', 'DAL04', 'DAL05', 'DAL06A', 'DAL08', 'DAL09', 'DEN01b',
+                            'DEN02', 'DEN03', 'DEN04', 'DEN05', 'DEN06', 'DEN07', 'DEN08', 'DEN09', 'DEN10', 'DEN11', 
+                            'DEN13', 'DENMNS03', 'DETD04', 'DETD05', 'DETD07', 'DETD08', 'DETD09', 'DETD15', 'DETD16', 
+                            'DETD18', 'DETD21', 'ELP01', 'ELP02', 'ELP03', 'ELP04', 'ELP05', 'ELP06', 'ELP07', 'ELP08', 
+                            'ELP09', 'ELP10', 'GC01', 'GC02', 'GC03', 'GC04', 'GC05', 'GC06', 'HOU02', 'HOU05', 'HOU07', 
+                            'HOU08', 'HOU09', 'HOU10', 'HOU11', 'HOU15', 'IL01', 'IL02', 'IL03', 'IL04', 'IL05', 'IL06', 
+                            'IL07', 'IN04', 'KC01', 'KC02', 'KC03', 'KC05', 'KC06', 'KC07', 'KC09', 'KC13', 'KC14', 
+                            'KC15', 'KC17', 'KC18', 'KC19', 'KC20', 'KC21', 'KC22', 'KC25', 'KC26', 'KC27', 'KC28', 
+                            'KC29', 'KC30', 'KC31', 'KSMNS01', 'LAX01', 'LAX01b', 'LAX02', 'LAX03', 'LAX04', 'LVG02', 
+                            'MIA02', 'MIA03', 'MIA05', 'MIA468', 'MIA583', 'MN04', 'MN11', 'NFL01', 'NFL03', 'NFL14', 
+                            'NFL15', 'NFL16', 'NO01', 'NO03', 'NO04', 'NO05', 'NO06', 'NO07', 'NO08', 'NO09', 'NO10', 
+                            'NO11', 'NO12', 'NO15', 'NO16', 'NVL01', 'NVL02', 'NVL05', 'NVL06', 'NVL07', 'NVL08', 'NVL09',
+                            'NVL10', 'NVL11', 'NVL12', 'OH01', 'ORJ10', 'ORJ502', 'ORJ584', 'PA03', 'PAMNS02', 'PAMNS04', 
+                            'PAMNS06', 'PAMNS07', 'PAMNS08', 'PHO01', 'PHO02', 'PHO03', 'PHO04', 'PHO06', 'PHO08', 'POR08',
+                            'POR09', 'POR10', 'POR11', 'POR16', 'POR23', 'RCH07', 'RCH10', 'SDG01', 'SDG02', 'SDG03', 
+                            'SDG04', 'SDG05', 'SDG06', 'SDG07', 'SDGMNS', 'SEA02', 'SEA03', 'SEA04', 'SEA05', 'SF01', 
+                            'SF02', 'SF03', 'SF04', 'SF05', 'SF06', 'SF07', 'SF08', 'SF09', 'SF11', 'SF12', 'SFL07', 
+                            'SJO01', 'SJO02', 'SJO03', 'SJO04', 'SJO05', 'SJO06', 'SJO07', 'SJO08', 'SJO09', 'SJO10', 
+                            'SJO11', 'SJO12', 'SJO13', 'SJO14', 'SJO15', 'SJO16', 'SLC01', 'SLC02', 'SLC03', 'SLC04', 
+                            'SLC05', 'SLC09', 'SLC10', 'SLC11', 'STL03b', 'STL04', 'STL05', 'STL10', 'STR01', 'STR02',
+                            'STR03', 'STR05', 'SXF01', 'SXF02', 'SXF03', 'SXF04', 'TNMNS02', 'TPO01', 'TPO03', 'TPO04', 
+                            'TXMNS03', 'VA01', 'VA02', 'VA06', 'WDC02' ) THEN 'Internal'
+            ELSE 'Dispatch'
+            END AS dispatchflag,
+        ticket_response_id,
+        create_datetime AS dispatch_ts,
+        locate_datetime AS clear_ts
+        FROM (SELECT
+                maxputinfolder.*,
+                CASE
+                    WHEN short_description = 'Put in Folder' THEN
+                        SUBSTR(SUBSTR(long_description, INSTR(long_description, 'in ') + 3), 0, INSTR(SUBSTR(long_description, INSTR(long_description, 'in ') + 3), 'by ') - 2)
+                    ELSE
+                        SUBSTR(SUBSTR(long_description, INSTR(long_description, 'to ') + 3), 0, INSTR(SUBSTR(long_description, INSTR(long_description, 'to ') + 3), 'by ') - 2)
+                END AS folder,
+                create_datetime,
+                res.ticket_response_id,
+                res.locate_datetime
+            FROM ticket_audit aud
+                INNER JOIN (SELECT
+                            ticket_id,
+                            MAX(ticket_audit_id) AS ticket_audit_id
+                        FROM
+                            ticket_audit
+                        WHERE
+                            --legacy_co = 'GREEN'
+                            LOWER(short_description) = 'assigned'
+                            OR LOWER(long_description) LIKE '%from training%'
+                            AND LOWER(long_description) NOT LIKE '%unknown line%'
+                            AND DATE_TRUNC(create_datetime, MONTH) >= DATE_ADD(DATE_TRUNC(CURRENT_DATE(), YEAR), INTERVAL -24 MONTH)
+                            GROUP BY ticket_id) 
+                    maxputinfolder ON maxputinfolder.ticket_audit_id = aud.ticket_audit_id
+                LEFT JOIN (SELECT
+                            minclose.*,
+                            resld.locate_datetime
+                            FROM ticket_response resld
+                            INNER JOIN (SELECT
+                                    ticket_id,
+                                    MIN(TO_NUMBER(TRIM(ticket_response_id))) AS ticket_response_id
+                                    FROM
+                                    ticket_response
+                                    WHERE to_status = 'Closed' 
+                                    AND DATE_TRUNC(create_datetime, MONTH) >= DATE_ADD(DATE_TRUNC(CURRENT_DATE(), YEAR), INTERVAL -24 MONTH)
+                                GROUP BY ticket_id) 
+                            minclose ON minclose.ticket_response_id = resld.ticket_response_id) 
+            res ON res.ticket_id = aud.ticket_id))
+SELECT  
+    clrdisp.TICKET_ ID,
+    clrdisp.TICKET_NUMBER,
+    clrdisp.NETWORK,
+    clrdisp.CALL_CENTER,
+    clrdisp.TICKET_TYPE,
+    clrdisp.CITY,
+    clrdisp.COUNTY,
+    clrdisp.STATE,
+    clrdisp.CENTER_LAT,
+    clrdisp.CENTER_LON,
+    clrdisp.AUTOPROCESSCLEARED,
+    clrdisp.CPMCLEARED,
+    clrdisp.FOCLEARED,
+    clrdisp.APEX_CLEARED,
+    clrdisp.DISPATCHED,
+    clrdisp.INTERNALLY_CANCELLED,
+    clrdisp.CPM_CLEAR_DESC,
+    clrdisp.FO_CLEAR_DESC,
+    clrdisp.APEX_CLEAR_DESC,
+    clrdisp.DISP_DESC,
+    clrdisp.LAST_CONT_RESP,
+    clrdisp.TICKETRECEIVEDTS,
+    clrdisp.AP_DATETIME,
+    clrdisp.CLEAR_DATETIME,
+    clrdisp.DISPATCH_DATETIME,
+    clrdisp.LOCATE_DATETIME,
+    clrdisp.MONTH,
+    clrdisp.LE_VENDOR,
+    clrdisp.LOCATE_ADDRESS,
+    clrdisp.REMARKS,
+    clrdisp.WORK_DONE_FOR,
+    otrotc.risk_score,
+    otrotc.firstresponseco,
+    otrotc.lastresponseco,
+    otrotc.assignedcontractor,
+    otrotc.servicearea,
+    otrotc.calcduedate,
+    otrotc.firstres_date,
+    otrotc.lastres_date,
+    otrotc.rtr_minutes, --Receive to First Response minutes
+    otrotc.rtc_minutes, --Receive to Close ticket minutes
+    ROUND((24 * 60) * TIMESTAMP_DIFF(PARSE_TIMESTAMP('%m/%d/%Y %H:%M:%S', clrdisp.locate_datetime), PARSE_TIMESTAMP('%m/%d/%Y %H:%M:%S', clrdisp.dispatch_datetime), MINUTE), 2) AS dtl_minutes, --Dispatch to Locate minutes
+    ROUND((24 * 60) * TIMESTAMP_DIFF(PARSE_TIMESTAMP('%m/%d/%Y %H:%M:%S', clrdisp.clear_datetime), PARSE_TIMESTAMP('%m/%d/%Y %H:%M:%S', clrdisp.ticketreceivedts), MINUTE), 2) AS rtic_minutes, --Receive to Internal clear minutes
+    otrotc.due_notdue,
+    CASE
+      WHEN otrotc.firstresponseco IS NULL THEN NULL
+    --   WHEN otrotc.firstresponseco = 'Internal' AND focleared = 1 THEN 'Contractor' -- To show FO team as contractor
+      WHEN otrotc.firstresponseco = 'Internal' THEN 'Internal'
+      ELSE 'Contractor'
+    END AS contractor_internal_otr,
+    otrotc.otr_locatorname, -- To provide future capability of connecting to Manager heirarchy.
+    otrotc.response_code,
+    CASE
+      WHEN otrotc.lastresponseco IS NULL THEN NULL
+      WHEN otrotc.lastresponseco = 'Internal' AND focleared = 1 THEN 'Contractor' -- To show FO team as contractor
+      WHEN otrotc.lastresponseco = 'Internal' THEN 'Internal'
+      ELSE 'Contractor'
+    END AS contractor_internal_otc,
+    otrotc.otc_locatorname, --To provide future capability of connecting to Manager heirarchy.
+    otrotc.otc_locatoremail,
+    otrotc.supervisor,
+    otrotc.otrflag,
+    otrotc.otcflag,
+    otrotc.wip_past_dueflag
+  FROM  (
+  SELECT  -- + use_hash(tix autoprocess clear dispatch dispatch2) 
+      tix.ticket_id,  --unique ticketID			
+      tix.ticket_number,  --TicketID in Utilisphere
+      -- CASE
+      --    WHEN tix.legacy_co = 'RED' THEN 'Enterprise'
+      --    ELSE 'Mass Markets'
+      -- END  AS network,	
+      CAST('' AS STRING) AS network,
+      tix.call_center,
+      tix.ticket_type,
+      tix.place AS city,
+      tix.county AS county,
+      UPPER(tix.state) AS state,
+      tix.center_lat,
+      tix.center_lon,
+      CASE 
+        WHEN autoprocess.long_description IS NOT NULL THEN 1 
+        ELSE  0    
+        END AS autoprocesscleared,
+      CASE
+        WHEN CPM_clear.long_description IS NOT NULL THEN 1
+        ELSE 0
+        END AS cpmcleared,
+      CASE 
+        WHEN fieldopslocator.long_description IS NOT NULL THEN 1
+        ELSE 0
+        END AS focleared,
+      CASE
+          WHEN apexscreener.long_description IS NOT NULL THEN 1
+          ELSE 0
+          END AS apex_cleared,
+      CASE
+          WHEN dispatch2.dispatchflag = 'Dispatch' THEN 1
+          WHEN dispatch.asgn_long_description IS NOT NULL THEN 1
+          WHEN fieldopslocator.long_description IS NOT NULL THEN 1
+          ELSE 0
+          END  AS dispatched,
+      CASE
+          WHEN LOWER(CPM_clear.long_description) LIKE '%cancelled%' THEN 1
+          WHEN LOWER(CPM_clear.long_description) LIKE '%zzzz 00 - cancel%' THEN 1
+          ELSE 0
+          END AS internally_cancelled,
+      CPM_clear.long_description AS cpm_clear_desc,
+      fieldopslocator.long_description AS fo_clear_desc,
+      apexscreener.long_description AS apex_clear_desc,
+      dispatch.asgn_long_description AS disp_desc,
+      dispatch.res_long_description AS last_cont_resp,
+      dispatch2.dispatchflag,
+      FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', tix.received_datetime) AS ticketreceivedts,
+      FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', autoprocess.ap_datetime) AS ap_datetime,
+      FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', CPM_clear.clear_datetime) AS clear_datetime,
+      FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', IFNULL(dispatch.dispatch_datetime, dispatch2.dispatch_ts)) AS dispatch_datetime,
+      CASE
+          WHEN autoprocess.long_description IS NOT NULL AND LOWER(CPM_clear.long_description) LIKE '%clear local%' THEN FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', TIMESTAMP(autoprocess.ap_datetime))
+          WHEN LOWER(CPM_clear.long_description) LIKE '%cancelled%' AND dispatch.asgn_long_description IS NULL THEN FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', TIMESTAMP(CPM_clear.clear_datetime))
+          WHEN CPM_clear.long_description IS NOT NULL AND dispatch.asgn_long_description IS NULL THEN FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', TIMESTAMP(CPM_clear.clear_datetime))
+          WHEN dispatch.asgn_long_description IS NOT NULL THEN FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', TIMESTAMP(dispatch.dispatch_datetime))
+          ELSE NULL
+      END AS locate_datetime, -- To bring visibility to locates by keyword. Valuable to Tiger team.
+      FORMAT_TIMESTAMP('%Y-%m', tix.received_datetime) AS month,
+      tix.requestor_company AS le_vendor,
+      TRIM(UPPER(tix.street_addr_nbr) 
+          || ' ' 
+          || UPPER(tix.street_direction_prefix) 
+          || ' ' 
+          || UPPER(tix.street_name) 
+          || ' ' 
+          || UPPER(tix.street_type) 
+          || ' ' 
+          || UPPER(tix.street_direction_suffix)) AS locate_address,
+      tix.remarks,
+      tix.work_done_for
+    FROM ticket tix
+    LEFT JOIN autoprocess ON autoprocess.ticket_id = tix.ticket_id		
+    --CPM Clear
+    LEFT JOIN CPM_clear ON clear.ticket_id = tix.ticket_id			
+    --APEX Clear		
+    LEFT JOIN apexscreener ON apexscreener.ticket_id = tix.ticket_id			
+    --FieldOpsLocator
+    LEFT JOIN fieldopslocator ON fieldopslocator.ticket_id = tix.ticket_id
+    --DISPATCH
+    LEFT JOIN dispatch ON dispatch.ticket_id = tix.ticket_id
+    -- DISPATCH 2
+    LEFT JOIN dispatch2 ON dispatch2.ticket_id = tix.ticket_id    	
+WHERE
+    --tix.legacy_co = 'GREEN'
+    DATE_TRUNC(received_datetime, MONTH) >= DATE_ADD(DATE_TRUNC(CURRENT_DATE(), YEAR), INTERVAL -24 MONTH)) clrdisp
+
+--OTR/OTC Logic Begins
+    LEFT JOIN (
+              SELECT -- + use_hash(tix tir_otr tir_otc foldertovendor) 
+              tix.ticket_id,  --unique ticketID			
+              tix.ticket_number,  --TicketID in Utilisphere			
+              --CASE
+              --    WHEN tix.legacy_co = 'RED' THEN
+              --        'Enterprise'
+              --    ELSE
+              --        'Mass Markets'
+              --END AS network,
+              CAST('' AS STRING) AS network,
+              tix.call_center,
+              tix.ticket_type,
+              tix.place AS city,
+              tix.county AS county,
+              UPPER(tix.state) AS state,
+              risk_score.risk_score,
+              CASE
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%USIC%' THEN 'USIC'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%ARKUPS%' THEN 'ARKUPS'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%GRAYCLIFF%' THEN 'DirectSAT'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%INTEGRITY%' THEN 'Integrity Locating'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%SUMMIT%' THEN 'Summit'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%UNIBAR%' THEN 'Olameter'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%OLAMETER%' THEN 'Olameter'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%SCL%' THEN 'Stake Center Locating'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%STAKE CENTER%' THEN 'Stake Center Locating'                    
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%STAKECENTER%' THEN 'Stake Center Locating'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%S_N%' THEN 'Stake Center Locating'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%S&N%' THEN 'Stake Center Locating'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%CUS%' THEN 'USIC'
+                WHEN UPPER(tir_otr.fr_response_contractor) LIKE '%LINDERLAKE%' THEN 'Linderlake'					
+        --Utilities Plus Locator Identifier                                               
+                WHEN LOWER(tir_otr.createdby_email) LIKE '%utilitiesplusllc.com%' THEN 'Utilities Plus'			
+                WHEN tir_otr.fr_response_contractor IS NULL AND tir_otr.firstres_date IS NOT NULL THEN 'Internal'
+                ELSE tir_otr.fr_response_contractor
+              END AS firstresponseco,     --Contract company/Internal who responded first to the ticket; The sunbelt responses do not have contract or sunbelt keyword so we use names. Add a suffix of 'sunbelt' to the contractors user name in under WIP and logic will be updated when that happens.			
+              CASE
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%USIC%' THEN 'USIC'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%ARKUPS%' THEN 'ARKUPS'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%GRAYCLIFF%' THEN 'DirectSAT'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%INTEGRITY%' THEN 'Integrity Locating'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%SUMMIT%' THEN 'Summit'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%UNIBAR%' THEN 'Olameter'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%OLAMETER%' THEN 'Olameter'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%SCL%' THEN 'Stake Center Locating'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%STAKE CENTER%' THEN 'Stake Center Locating'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%STAKECENTER%' THEN 'Stake Center Locating'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%S_N%' THEN 'Stake Center Locating'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%S&N%' THEN 'Stake Center Locating'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%CUS%' THEN 'USIC'
+                WHEN UPPER(tir_otc.lr_response_contractor) LIKE '%LINDERLAKE%' THEN 'Linderlake'			
+        --Utilities Plus Locator Identifier      --Added by Ambar on 12/20/2021; new locator team identified			
+                WHEN LOWER(tir_otc.createdby_email) LIKE '%utilitiesplusllc.com%' THEN 'Utilities Plus'			
+                WHEN tir_otc.lr_response_contractor IS NULL AND tir_otc.lastres_date IS NOT NULL THEN 'Internal'
+                  ELSE tir_otc.lr_response_contractor
+              END AS lastresponseco,  --Contract company/Internal who responded last to the ticket; The sunbelt responses do not have contract or sunbelt keyword so we use names. Add a suffix of 'sunbelt' to the contractors user name in under WIP and logic will be updated when that happens.			
+              CASE
+                WHEN foldertovendor.vendor IS NULL THEN 'Internal'
+                ELSE foldertovendor.vendor
+              END AS assignedcontractor,  --Represents the actual vendor to whom the ticket should have been assigned based on last folder movement of the ticket 			
+              FOLDER AS servicearea,
+              FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', tix.received_datetime) AS received_datetime,
+              CASE
+                WHEN  LOWER(tix.ticket_type) = 'emergency' AND tix.received_datetime > tix.due_datetime THEN
+                      FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR))
+                WHEN  LOWER(tix.ticket_type) = 'emergency' AND 24 * (tix.due_datetime - tix.received_datetime) < 2 THEN
+                      FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', TIMESTAMP_ADD(tix.due_datetime, INTERVAL 2 HOUR))
+                WHEN  LOWER(tix.ticket_type) IN ('rush', 'now', 'damage/exposed') AND tix.state = 'CA' THEN
+                      FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR))
+                WHEN  LOWER(tix.ticket_type) IN ('renew', 'amend') THEN
+                      CONCAT(FORMAT_TIMESTAMP('%m/%d/%Y', calendar.due_date), ' ', FORMAT_TIMESTAMP('%H:%M:%S', tix.received_datetime))
+                ELSE FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', tix.due_datetime)
+              END AS calcduedate,     --due date which comes from utilisphere is not as per requirement, we create our internal rules based on business requirements			
+              FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', tir_otr.firstres_date) AS firstres_date,
+              FORMAT_TIMESTAMP('%m/%d/%Y %H:%M:%S', tir_otc.lastres_date) AS lastres_date,
+              ROUND((24 * 60) * (TIMESTAMP_DIFF(tir_otr.firstres_date, tix.received_datetime, MINUTE) / 60.0), 2) AS rtr_minutes,  --received to first response hours			
+              ROUND((24 * 60) * (TIMESTAMP_DIFF(tir_otc.lastres_date, tix.received_datetime, MINUTE) / 60.0), 2) AS rtc_minutes,  --received to close hours		
+              CASE
+                WHEN LOWER(tix.ticket_type) = 'emergency' AND tix.received_datetime > tix.due_datetime 
+                  THEN TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR)
+                WHEN LOWER(tix.ticket_type) = 'emergency' AND 24 * TIMESTAMP_DIFF(tix.due_datetime, tix.received_datetime, HOUR) < 2 
+                  THEN TIMESTAMP_ADD(tix.due_datetime, INTERVAL 2 HOUR)
+                WHEN LOWER(tix.ticket_type) IN ('rush', 'now', 'damage/exposed') AND tix.state = 'CA' 
+                  THEN TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR)
+                WHEN LOWER(tix.ticket_type) IN ('renew', 'amend') 
+                  THEN TIMESTAMP(DATETIME_TRUNC(calendar.due_date, DAY), TIME(tix.received_datetime))
+                ELSE
+                  tix.due_datetime
+              END <= TIMESTAMP_TRUNC(CURRENT_DATETIME(), DAY) AS due_notdue,
+              tir_otr.fr_locator_name AS otr_locatorname,
+              tir_otc.lr_locator_name AS otc_locatorname,
+              tir_otc.createdby_email AS otc_locatoremail,
+              tir_otc.supervisor,
+              tir_otc.response_code,
+              CASE
+                WHEN TIMESTAMP_TRUNC(firstres_date, DAY) <= CASE
+                    WHEN LOWER(tix.ticket_type) = 'emergency' AND tix.received_datetime > tix.due_datetime
+                      THEN TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR)
+                    WHEN LOWER(tix.ticket_type) = 'emergency' AND 24 * TIMESTAMP_DIFF(tix.due_datetime, tix.received_datetime, HOUR) < 2 
+                      THEN TIMESTAMP_ADD(tix.due_datetime, INTERVAL 2 HOUR)
+                    WHEN LOWER(tix.ticket_type) IN ('rush', 'now', 'damage/exposed') AND tix.state = 'CA' 
+                      THEN TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR)
+                    WHEN LOWER(tix.ticket_type) IN ('renew', 'amend') 
+                      THEN TIMESTAMP(DATETIME_TRUNC(calendar.due_date, DAY), TIME(tix.received_datetime))
+                    ELSE
+                      tix.due_datetime
+                  END THEN 1
+                ELSE 0
+              END AS otrflag,
+              CASE
+                WHEN TIMESTAMP_TRUNC(lastres_date, DAY) <= CASE
+                  WHEN LOWER(tix.ticket_type) = 'emergency' AND tix.received_datetime > tix.due_datetime 
+                    THEN TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR)
+                  WHEN LOWER(tix.ticket_type) = 'emergency' AND 24 * TIMESTAMP_DIFF(tix.due_datetime, tix.received_datetime, HOUR) < 2 
+                    THEN TIMESTAMP_ADD(tix.due_datetime, INTERVAL 2 HOUR)
+                  WHEN LOWER(tix.ticket_type) IN ('rush', 'now', 'damage/exposed') AND tix.state = 'CA' 
+                    THEN TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR)
+                  WHEN LOWER(tix.ticket_type) IN ('renew', 'amend') 
+                    THEN TIMESTAMP(DATETIME_TRUNC(calendar.due_date, DAY), TIME(tix.received_datetime))
+                  ELSE tix.due_datetime
+                END THEN 1
+                ELSE 0
+              END AS otcflag,
+              CASE
+                WHEN tir_otc.lastres_date IS NULL
+                    AND CASE
+                    WHEN LOWER(tix.ticket_type) = 'emergency' AND tix.received_datetime > tix.due_datetime 
+                      THEN TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR)
+                    WHEN LOWER(tix.ticket_type) = 'emergency' AND 24 * TIMESTAMP_DIFF(tix.due_datetime, tix.received_datetime, HOUR) < 2 
+                      THEN TIMESTAMP_ADD(tix.due_datetime, INTERVAL 2 HOUR)
+                    WHEN LOWER(tix.ticket_type) IN ('rush', 'now', 'damage/exposed') AND tix.state = 'CA' 
+                      THEN TIMESTAMP_ADD(tix.received_datetime, INTERVAL 2 HOUR)
+                    WHEN LOWER(tix.ticket_type) IN ('renew', 'amend') 
+                      THEN TIMESTAMP(DATETIME_TRUNC(calendar.due_date, DAY), TIME(tix.received_datetime))
+                    ELSE
+                      tix.due_datetime
+                  END < TIMESTAMP_TRUNC(CURRENT_DATETIME(), DAY) THEN
+                  1
+                ELSE
+                  0
+              END AS wip_past_dueflag,
+            FROM
+                ticket tix
+                LEFT JOIN (         --Date table to create calculation of DUE DATE for only 2 business days			
+                    SELECT
+                      c1.day_date AS rec_date,
+                      c2.day_date AS due_date
+                      FROM (SELECT
+                            SUM(is_business_day) OVER (ORDER BY day_date) AS cs1,
+                            calendar_t.day_date
+                            FROM
+                            `dwh_cur_sitetracker_bqd.calendar_t` AS calendar_t) AS c1
+                      LEFT JOIN (
+                        SELECT
+                        ROW_NUMBER() OVER (PARTITION BY cs2 ORDER BY day_date) AS rn,
+                        calendar_t.cs2,
+                        calendar_t.day_date
+                        FROM (SELECT
+                              SUM(is_business_day) OVER (ORDER BY day_date) AS cs2,
+                              calendar_t.day_date
+                              FROM
+                              `dwh_cur_sitetracker_bqd.calendar_t` AS calendar_t) AS calendar_t
+                      ) AS c2 ON c1.cs1 + 2 = c2.cs2 AND c2.rn = 1
+                      LEFT JOIN (
+                        SELECT
+                        ticket_id,
+                        SUBSTR(long_description, INSTR(long_description, 'value: ') + 7) AS risk_score
+                        FROM
+                        ticket_audit
+                        WHERE SUBSTR(long_description, 0, 28) = 'Ticket Risk Score calculated'
+                        ) AS risk_score ON risk_score.ticket_id = tix.ticket_id
+                      LEFT JOIN (  --OTR Subquery (looks for first response)			
+                        SELECT
+                        ROW_NUMBER() OVER (PARTITION BY ticket_id ORDER BY TO_NUMBER(TRIM(ticket_response_id)) ASC) AS rn,
+                        ticket_id,
+                        response_name AS response_code,
+                        locate_datetime AS firstres_date,
+                        COALESCE(TRIM(locator_name), TRIM(locator_first_name || ' ' || locator_last_name), operator_first_name || ' ' || operator_last_name) AS fr_locator_name,
+                        CASE
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%USIC%' THEN 'USIC'
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%ARKUPS%' THEN 'ARKUPS'
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%STAKECENTER%' THEN 'STAKECENTER'
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%S&N%' THEN 'S&N'
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%CUS%' THEN 'CUS'
+                          ELSE LOCATOR_NAME
+                        END AS fr_response_contractor,
+                        createdby_email
+                        FROM
+                        ticket_response
+                        WHERE TRUNC(create_datetime) >= ADD_MONTHS(TRUNC(CURRENT_DATE()), -24)
+                        ) AS tir_otr ON tix.ticket_id = tir_otr.ticket_id AND (tir_otr.rn = 1 OR tir_otr.rn IS NULL)
+                      LEFT JOIN (  --OTC Subquery (looks for last response after closing the ticket)		
+                        SELECT
+                        ROW_NUMBER() OVER(PARTITION BY ticket_id ORDER BY CAST(TRIM(ticket_response_id) AS INT64) DESC) AS rn,
+                        ticket_id,
+                        response_name AS response_code, -- To provide response code details
+                        locate_datetime AS lastres_date,
+                        COALESCE(
+                          TRIM(locator_name),
+                          TRIM(locator_first_name || ' ' || locator_last_name),
+                          TRIM(operator_first_name || ' ' || operator_last_name)
+                        ) AS lr_locator_name, -- operator_name as fallback option in case the ticket is not responded by a locator
+                        ' ' AS supervisor,
+                        CASE
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%USIC%' THEN 'USIC'
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%ARKUPS%' THEN 'ARKUPS'
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%STAKECENTER%' THEN 'STAKECENTER'
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%S&N%' THEN 'S&N'
+                          WHEN UPPER(LOCATOR_NAME) LIKE '%CUS%' THEN 'CUS'
+                          ELSE LOCATOR_NAME
+                        END AS lr_response_contractor,
+                        createdby_email
+                        FROM ticket_response tir
+                        WHERE LOWER(TO_STATUS) = 'closed' 
+                          AND LOWER(REGEXP_REPLACE(response_name, '\\s', '')) IN (
+                              'usicclearedlocal', 'markedconflict', 'ctlclearlocal', 'stakecenter-noconflict',
+                              'markedlocalcomplete', 'arkups-located', 'arkups-clear', 'stakecenter-marked',
+                              'cancelled', 'stakecenternoresponserequired', 'clearedbyutilisphere', 'clearlocal',
+                              'installationrecords/mapsprovided', 'noconflict', 'ctlcancelled', 'designreq-marked',
+                              'noresponseneeded', 'noconflict/closed', 'ctlnoresponseneeded', 
+                              'marksstillvisible/noremarksrequired', 'stakecenter-abandonedline-notownedbyutility',
+                              'stakecenterrecords,maps,documentsprovided', 'damageinvestigation-ctlclear',
+                              '0-installationrecords/mapsprovided', 'galargeprojectexpired', 'thisnoticehasbeenupdated',
+                              'midesignonly-nofacilities', 'midesignonly-nofacilites', 'midesignonly-taskcomplete',
+                              'stakecenter-criticalfacilitymarked', 'stakecentermarked-uptoprivatelyownedutility')
+                        -- (closed = 'Yes' OR CLOSED IS NOT NULL)
+                        AND TRUNC(create_datetime) >= DATE_ADD(CURRENT_DATE(), INTERVAL -24 MONTH)
+                        ) tir_otc ON tix.ticket_id = tir_otc.ticket_id AND (tir_otc.rn = 1 OR tir_otc.rn IS NULL)
+                      LEFT JOIN (    -- Subquery to connect [Last moved to ticket folder] to the Responsible Vendor
+                         -- UNION
+                        SELECT
+                        aud.ticket_id,
+                        CASE
+                          WHEN aud.short_description = 'Assigned' THEN
+                            SUBSTR(SUBSTR(aud.long_description, INSTR(aud.long_description, 'to ') + 3), 0, INSTR(SUBSTR(aud.long_description, INSTR(aud.long_description, 'to ') + 3), 'by ') - 2)
+                          ELSE
+                            SUBSTR(SUBSTR(long_description, INSTR(long_description, 'in ') + 3), 0, INSTR(SUBSTR(aud.long_description, INSTR(aud.long_description, 'in ') + 3), 'by ') - 2)
+                        END AS folder, -- To have a view of Last folder movement/Last Assigned to
+                        CASE
+                          WHEN UPPER(aud.long_description) LIKE '%USIC%' THEN 'USIC'
+                          WHEN UPPER(aud.long_description) LIKE '%ARKUPS%' THEN 'ARKUPS'
+                          WHEN UPPER(aud.long_description) LIKE '%GRAYCLIFF%' THEN 'DirectSAT'
+                          WHEN UPPER(aud.long_description) LIKE '%INTEGRITY%' THEN 'Integrity Locating'
+                          WHEN UPPER(aud.long_description) LIKE '%SUMMIT%' THEN 'Summit'
+                          WHEN UPPER(aud.long_description) LIKE '%UNIBAR%' THEN 'Olameter'
+                          WHEN UPPER(aud.long_description) LIKE '%OLAMETER%' THEN 'Olameter'
+                          WHEN UPPER(aud.long_description) LIKE '%SCL%' THEN 'Stake Center Locating'
+                          WHEN UPPER(aud.long_description) LIKE '%STAKE CENTER%' THEN 'Stake Center Locating'
+                          WHEN UPPER(aud.long_description) LIKE '%STAKECENTER%' THEN 'Stake Center Locating'
+                          WHEN UPPER(aud.long_description) LIKE '%S_N%' THEN 'Stake Center Locating'
+                          WHEN UPPER(aud.long_description) LIKE '%S&N%' THEN 'Stake Center Locating'
+                          WHEN UPPER(aud.long_description) LIKE '%CUS%' THEN 'USIC'
+                          WHEN UPPER(aud.long_description) LIKE '%LINDERLAKE%' THEN 'Linderlake'
+                          WHEN UPPER(aud.long_description) LIKE '%SUNBELT%' THEN 'Sunbelt'
+                          WHEN UPPER(aud.long_description) LIKE '%INTERNAL%' THEN 'Internal'
+                          WHEN UPPER(aud.long_description) LIKE '%AUTO PROCESS%' THEN 'Internal'
+                          WHEN UPPER(aud.long_description) LIKE '%SADIE HULL%' THEN 'Internal'
+                          WHEN UPPER(aud.long_description) LIKE '%CASEY LAWRENCE%' THEN 'Internal' -- handle edge case of automation
+                          WHEN UPPER(aud.long_description) LIKE '%WES CLAYTON%' THEN 'Internal' --  handle edge case of automation
+                          WHEN UPPER(aud.long_description) LIKE '%NOLAN SNYDER%' THEN 'Internal'
+                          WHEN UPPER(aud.long_description) LIKE '%RYAN EGAN%' THEN 'Internal'
+                          WHEN UPPER(aud.long_description) LIKE '%TRAINING%' THEN 'Internal'
+                          WHEN UPPER(aud.long_description) LIKE '%-DPG-%' THEN 'Olameter-Test'
+                          WHEN UPPER(aud.long_description) LIKE '%AUDIT 1-ROUTE%' THEN 'Internal'
+                          ELSE 'Internal'
+                        END AS vendor
+                        FROM ticket_audit aud
+                        INNER JOIN (
+                        SELECT
+                              ticket_id,
+                              MAX(ticket_audit_id) AS ticket_audit_id
+                            FROM
+                              `your_project_name.your_dataset_name.ticket_audit`
+                            WHERE
+                              -- legacy_co = 'GREEN'
+                              LOWER(short_description) IN ('assigned', 'put in folder')
+                              AND DATE_TRUNC(create_datetime, MONTH) >= DATE_ADD(CURRENT_DATE(), INTERVAL -24 MONTH)
+                            GROUP BY ticket_id) lastfolder_g ON lastfolder_g.ticket_audit_id = aud.ticket_audit_id
+                            WHERE DATE_TRUNC(create_datetime, MONTH) >= DATE_ADD(CURRENT_DATE(), INTERVAL -24 MONTH)
+                          ) foldertovendor ON foldertovendor.ticket_id = tix.ticket_id
+                        WHERE tix.received_datetime >= DATE_ADD(CURRENT_DATE(), INTERVAL -24 MONTH)
+                        )) otrotc ON otrotc.ticket_id = clrdisp.ticket_id;
+
+
